@@ -1,16 +1,27 @@
 <?php 
 if (isset($_GET['length'])) {
-    $length = $_GET['length'];
+    // se è settato il parametro della lunghezza della password
+    // generiamo la password
 
-    $uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $lowercase = 'abcdefghijklmnopqrstuvwxyz';  
-    $numbers = '0123456789';
-    $symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+    // abbiamo i possibili caratteri per la nostra password
+    $uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    $lowercase = "abcdefghijklmnopqrstuvwxyz";
+    $numbers   = "0123456789";
+    $symbols   = "!@#$%^&*()_+-=[]{}|;:,.<>?";
 
+    // variabile che contiene tutti questi caratteri insieme
+    $allChars = $uppercase . $lowercase . $numbers . $symbols;
+
+    // stampo tutta la stringa di caratteri
+    echo $allChars . "<br>";
+
+    // estraggo un carattere preciso (in questo caso quello a indice 1 → 'B')
+    echo substr($allChars, 1, 1) . "<br>";
+
+    // estraggo un carattere randomico da questa stringa
+    $randomIndex = random_int(0, strlen($allChars) - 1);
+    echo "Carattere casuale: " . substr($allChars, $randomIndex, 1);
 }
-
-
-
 ?>
 
 
