@@ -1,17 +1,20 @@
 <?php
-// Logica PHP
-$generated = null;
-$error = null;
+declare(strict_types=1);
 
-$length = filter_input(
-    INPUT_GET,
-    'length',
-    FILTER_VALIDATE_INT,
-    ['options' => ['min_range' => 5, 'max_range' => 20]]
-);
+function validateLength(?string $raw): array {
+    if ($raw === null || $raw === '') {
+        return [null, null]; // nessun parametro passato: nessun errore
+    }
+    $len = filter_var($raw, FILTER_VALIDATE_INT, [
+        'options' => ['min_range' => 5, 'max_range' => 20]
+    ]);
+    if ($len === false) {
+        return [null, "La lunghezza deve essere un intero tra 5 e 20."];
+    }
+    return [$len, null];
+}
 
-if ($length !== null && $length !== false) {
-    // set di caratteri
+function generatePassword(int $length): string {
     $uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     $lowercase = "abcdefghijklmnopqrstuvwxyz";
     $numbers   = "0123456789";
@@ -19,16 +22,11 @@ if ($length !== null && $length !== false) {
 
     $allChars = $uppercase . $lowercase . $numbers . $symbols;
 
-    // genera password casuale lunga $length
     $pwd = '';
+    $max = strlen($allChars) - 1;
     for ($i = 0; $i < $length; $i++) {
-        $idx = random_int(0, strlen($allChars) - 1);
+        $idx = random_int(0, $max);
         $pwd .= $allChars[$idx];
     }
-
-    $generated = $pwd;
-} elseif (isset($_GET['length'])) {
-    // parametro passato ma non valido
-    $error = "La lunghezza deve essere un intero tra 5 e 20.";
+    return $pwd;
 }
-?>
