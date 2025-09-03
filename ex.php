@@ -12,15 +12,18 @@ if (isset($_GET['length'])) {
     // variabile che contiene tutti questi caratteri insieme
     $allChars = $uppercase . $lowercase . $numbers . $symbols;
 
+    
+
     // stampo tutta la stringa di caratteri
     echo $allChars . "<br>";
 
     // estraggo un carattere preciso (in questo caso quello a indice 1 → 'B')
-    echo substr($allChars, 1, 1) . "<br>";
+    echo substr($allChars, 6, 1) . "<br>";
 
     // estraggo un carattere randomico da questa stringa
     $randomIndex = random_int(0, strlen($allChars) - 1);
-    echo "Carattere casuale: " . substr($allChars, $randomIndex, 1);
+    echo $randomIndex . "<br>";
+
 }
 ?>
 
@@ -43,9 +46,9 @@ if (isset($_GET['length'])) {
     </h1>
 
 
-    <form action="">
-        <input type="number" name="length" id="length min="5" max="20">
-        <label for="length"></label>
+    <form action="submit.php" method="GET">
+        <input type="number" name="length" id="length min="5" max="20" >
+        <label for="length" placeholder="Lunghezza password (5-20)"></label>
 
         <button type="submit">Genera</button>
     </form>
